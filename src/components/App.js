@@ -16,6 +16,23 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contact', JSON.stringify(this.state.contacts))
+    }
+  }
+
+  componentDidMount() {
+    const contact = localStorage.getItem('contact');
+    const parsedContacts = JSON.parse(contact);
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+
+    
+  }
+
   filterChange = e => {
     this.setState({
       filter: e.currentTarget.value,
